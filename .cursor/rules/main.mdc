@@ -1,0 +1,23 @@
+---
+description: FluxoX project rules
+globs:
+---
+# FluxoX
+
+**Author:** theyashdhiman04
+
+FluxoX is a multi-agent flow orchestration platform. The backend is FastAPI; flow execution is handled by the FlowEngine in `app/flow/engine.py`, with optional LangGraph.
+
+## Conventions
+
+- Use `/flows` for flow CRUD and templates; keep execute and metrics on their routers.
+- Prefer async for I/O (DB, flow execution).
+- Config via `app.config.config` and environment variables.
+- Tests patch `app.flow.engine.FlowEngine` and use `/flows`, `/execute` as needed.
+
+## Structure
+
+- `app/flow/` – FlowEngine and FlowState
+- `app/api/` – flows, agents, execute, metrics
+- `app/auth/` – JWT and auth routes
+- `app/database/` – DB init and connection (fluxox.db, aiosqlite)

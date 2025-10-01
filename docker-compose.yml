@@ -1,0 +1,56 @@
+version: '3.8'
+
+services:
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: fluxox-backend
+    restart: unless-stopped
+    ports:
+      - '8000:8000'
+    environment:
+      - ENVIRONMENT=production
+      - USE_MOCK_WORKFLOW=true
+      - DATABASE_URL=data/fluxox.db
+      - LOG_LEVEL=INFO
+      - SECRET_KEY=${SECRET_KEY:-supersecretkey}
+      - CORS_ALLOWED_ORIGINS=${CORS_ALLOWED_ORIGINS:-https://fluxox.app,https://app.fluxox.app}
+      - CONDA_DEFAULT_ENV=fluxox
+    volumes:
+      - ./backend/data:/app/data
+      - ./backend/logs:/app/logs
+    healthcheck:
+      test:
+        [
+          'CMD',
+          'conda',
+          'run',
+          '-n',
+          'fluxox',
+          'curl',
+          '-f',
+          'http://localhost:8000/health',
+        ]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
+
+  # Uncomment when frontend is ready
+  # frontend:
+  #   build:
+  #     context: ./frontend
+  #     dockerfile: Dockerfile
+  #   container_name: fluxox-frontend
+  #   restart: unless-stopped
+  #   ports:
+  #     - "3000:3000"
+  #   environment:
+  #     - REACT_APP_API_URL=http://backend:8000
+  #   depends_on:
+  #     - backend
+
+networks:
+  default:
+    name: fluxox-network
