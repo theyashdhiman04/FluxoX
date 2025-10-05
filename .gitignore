@@ -1,5 +1,7 @@
 # Misc
 secret/
+rewrite-dates.sh
+edit-second.ps1
 
 # Python
 __pycache__/

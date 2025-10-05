@@ -1,4 +1,4 @@
-"""Authentication API endpoints."""
+"""Authentication API endpoints and user profile management."""
 
 from app.auth.jwt import (
     Token,
