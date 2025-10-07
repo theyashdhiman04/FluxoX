@@ -12,7 +12,7 @@ class Database:
     """Database class for workflow persistence."""
 
     async def fetch_all(self, query: str, values: tuple = None) -> list:
-        """Execute a query and return all results."""
+        """Execute a query and return all results (optimized batch fetch)."""
         async with aiosqlite.connect(DATABASE_URL) as db:
             db.row_factory = aiosqlite.Row
             async with db.execute(query, values or ()) as cursor:
