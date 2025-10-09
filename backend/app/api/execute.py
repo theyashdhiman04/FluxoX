@@ -16,7 +16,7 @@ class ExecuteRequest(BaseModel):
 
 @router.post("/")
 async def execute_flow(request: ExecuteRequest):
-    """Execute a flow with the given input data."""
+    """Execute a flow with the given input data (integrated execute endpoint)."""
     try:
         result = await flow_engine.execute_workflow(
             workflow_id=request.workflow_id,
