@@ -1,4 +1,4 @@
-"""API endpoints for system metrics."""
+"""API endpoints for system metrics and real-time execution stats."""
 
 from fastapi import APIRouter, HTTPException
 from app.database import get_db
