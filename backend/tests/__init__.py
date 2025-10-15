@@ -1,1 +1,1 @@
-"""Test package for FluxoX."""
+"""Test package for FluxoX (comprehensive unit tests)."""
