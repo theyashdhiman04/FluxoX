@@ -84,7 +84,7 @@ app.add_middleware(
 logger.info(
     f"CORS configuration: allowed origins = {config.cors.allowed_origins}")
 
-# Rate limiting middleware
+# Rate limiting middleware (security: limit request rate per IP)
 if config.rate_limit.enabled:
     class RateLimitMiddleware:
         def __init__(
