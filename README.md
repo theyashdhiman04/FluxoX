@@ -1,24 +1,22 @@
 # FluxoX
 
-**Multi-agent flow orchestration platform**
+Multi-agent flow orchestration platform. Define flows, run them via REST, and optionally use LangGraph for graph-based execution.
 
-FluxoX is an API-first platform that runs automated pipelines using specialized agents: research, processing, approval, and optimization. Define flows, run them via REST, and optionally plug in LangGraph for graph-based execution.
+---
 
-**Author:** [theyashdhiman04](https://github.com/theyashdhiman04)
+## Author
+
+**Yash Dhiman**  
+GitHub: [theyashdhiman04](https://github.com/theyashdhiman04)
 
 ---
 
 ## Quick start
 
 ```bash
-# Clone the repo
 git clone https://github.com/theyashdhiman04/FluxoX.git
 cd FluxoX
-
-# Optional: copy and edit env
-cp backend/.env.sample backend/.env
-
-# One-shot setup and run
+cp backend/.env.sample backend/.env   # optional
 make setup-and-run
 ```
 
@@ -28,13 +26,12 @@ API docs: **http://localhost:8000/docs**
 
 ## Features
 
-- **Flow engine** – Pipeline execution with configurable mock or LangGraph backend
-- **REST API** – FastAPI with `/flows`, `/agents`, `/execute`, `/metrics`, `/health`
-- **Agents** – Researcher, Processor, Approver, Optimizer with clear roles
-- **Persistence** – SQLite store for flows and execution metrics
-- **Auth** – JWT-based auth and optional rate limiting
-- **Tests** – Pytest suite for API and flow engine
-- **Docker** – Dockerfile and docker-compose for deployment
+- Flow engine with configurable mock or LangGraph backend
+- REST API: `/flows`, `/agents`, `/execute`, `/metrics`, `/health`
+- Agents: Researcher, Processor, Approver, Optimizer
+- SQLite persistence for flows and metrics
+- JWT auth and optional rate limiting
+- Pytest suite and Docker deployment
 
 ---
 
@@ -48,38 +45,21 @@ API docs: **http://localhost:8000/docs**
 | GET | `/flows/{id}` | Get flow by ID |
 | GET | `/flows/templates` | List flow templates |
 | GET | `/agents` | List agents |
-| POST | `/execute` | Execute a flow by ID + input |
-| GET | `/metrics` | Execution and system metrics |
+| POST | `/execute` | Execute a flow |
+| GET | `/metrics` | Metrics |
 | GET | `/health` | Health check |
 
 ---
 
 ## Local development
 
-1. **Environment**
-
-   ```bash
-   make create-env
-   # Then: conda activate fluxox  (or use your shell’s activate)
-   ```
-
-2. **Database**
-
-   ```bash
-   make init-db
-   ```
-
-3. **Run server**
-
-   ```bash
-   make run-backend
-   ```
-
-4. **Demo**
-
-   ```bash
-   make run-demo
-   ```
+```bash
+make create-env
+conda activate fluxox
+make init-db
+make run-backend
+make run-demo
+```
 
 ---
 
@@ -88,24 +68,14 @@ API docs: **http://localhost:8000/docs**
 ```bash
 make docker-build
 make docker-up
-# API at http://localhost:8000/docs
-make docker-down   # stop
+make docker-down
 ```
 
 ---
 
 ## Configuration
 
-Use `backend/.env` or environment variables. Examples:
-
-- `ENVIRONMENT` – `development` | `testing` | `production`
-- `USE_MOCK_WORKFLOW` – `true` (default) for mock execution, `false` for LangGraph
-- `DATABASE_URL` – SQLite path (e.g. `fluxox.db`)
-- `LOG_LEVEL` – `DEBUG` | `INFO` | `WARNING` | `ERROR`
-- `SECRET_KEY` – Required in production
-- `CORS_ALLOWED_ORIGINS` – Comma-separated origins
-
-See `backend/.env.sample` for more options.
+Use `backend/.env` or environment variables: `ENVIRONMENT`, `USE_MOCK_WORKFLOW`, `DATABASE_URL`, `LOG_LEVEL`, `SECRET_KEY`, `CORS_ALLOWED_ORIGINS`. See `backend/.env.sample`.
 
 ---
 
@@ -115,11 +85,11 @@ See `backend/.env.sample` for more options.
 FluxoX/
 ├── backend/
 │   ├── app/
-│   │   ├── agents/       # Researcher, Processor, Approver, Optimizer
-│   │   ├── api/          # flows, agents, execute, metrics
-│   │   ├── auth/         # JWT and auth routes
-│   │   ├── flow/         # FlowEngine (flow execution)
-│   │   ├── database/     # DB connection and init
+│   │   ├── agents/
+│   │   ├── api/
+│   │   ├── auth/
+│   │   ├── flow/
+│   │   ├── database/
 │   │   ├── config.py
 │   │   └── main.py
 │   ├── tests/
@@ -136,27 +106,19 @@ FluxoX/
 
 | Command | Description |
 |---------|-------------|
-| `make create-env` | Create conda env from environment.yml |
-| `make update-env` | Update conda env |
+| `make create-env` | Create conda env |
 | `make init-db` | Initialize DB |
 | `make run-backend` | Start API server |
 | `make run-demo` | Run demo script |
-| `make test-backend` | Run all tests |
-| `make test-api` | Run API tests |
-| `make test-workflow` | Run flow engine tests |
-| `make format` | Black + isort |
-| `make lint` | Flake8 |
+| `make test-backend` | Run tests |
 | `make docker-build` / `docker-up` / `docker-down` | Docker lifecycle |
-| `make setup-and-run` | Setup + run backend |
+| `make setup-and-run` | Setup and run backend |
 
 ---
 
 ## LangGraph
 
-By default FluxoX uses a **mock** flow execution (no LangGraph runtime). To use LangGraph:
-
-- Set `USE_MOCK_WORKFLOW=false`.
-- If LangGraph fails at runtime, the engine falls back to mock execution.
+Default is mock execution. Set `USE_MOCK_WORKFLOW=false` to use LangGraph; the engine falls back to mock if LangGraph fails.
 
 ---
 
